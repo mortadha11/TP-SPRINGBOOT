@@ -1,27 +1,13 @@
 package tn.esprit.tpfoyer.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
+import lombok.*;
 import tn.esprit.tpfoyer.domain.enums.CategorieVehicule;
 import tn.esprit.tpfoyer.domain.enums.StatutVehicule;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Entity
 @Table(name = "vehicule")
@@ -36,9 +22,7 @@ public class Vehicule {
     private Long idVehicule;
 
     private String immatriculation;
-
     private String marque;
-
     private String modele;
 
     @Enumerated(EnumType.STRING)
@@ -49,23 +33,20 @@ public class Vehicule {
     @Enumerated(EnumType.STRING)
     private StatutVehicule statut;
 
-
     @ManyToOne
     @JoinColumn(name = "agence_id")
     private Agence agence;
 
-
+    @JsonIgnore
     @OneToMany(mappedBy = "vehicule")
     private List<Reservation> reservations = new ArrayList<>();
 
-
+    @JsonIgnore
     @OneToMany(mappedBy = "vehicule")
     private List<Maintenance> maintenances = new ArrayList<>();
 
-
     @ManyToMany
-    @JoinTable(
-            name = "vehicule_equipements",
+    @JoinTable(name = "vehicule_equipements",
             joinColumns = @JoinColumn(name = "vehicule_id"),
             inverseJoinColumns = @JoinColumn(name = "equipement_id"))
     private List<Equipement> equipements = new ArrayList<>();

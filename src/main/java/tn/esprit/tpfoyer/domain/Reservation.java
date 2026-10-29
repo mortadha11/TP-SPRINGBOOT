@@ -1,19 +1,7 @@
 package tn.esprit.tpfoyer.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import jakarta.persistence.*;
+import lombok.*;
 import tn.esprit.tpfoyer.domain.enums.StatutReservation;
 
 import java.time.LocalDate;
@@ -22,6 +10,7 @@ import java.time.LocalDate;
 @Table(name = "reservation")
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class Reservation {
@@ -31,7 +20,6 @@ public class Reservation {
     private Long idReservation;
 
     private LocalDate dateDebut;
-
     private LocalDate dateFin;
 
     @Enumerated(EnumType.STRING)
@@ -44,7 +32,6 @@ public class Reservation {
     @ManyToOne
     @JoinColumn(name = "vehicule_id")
     private Vehicule vehicule;
-
 
     @OneToOne
     @JoinColumn(name = "contrat_id")
